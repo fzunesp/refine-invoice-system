@@ -25,7 +25,7 @@ import { InvoiceList, InvoiceCreate, InvoiceEdit } from "./pages/invoices";
 import { Dashboard } from "./pages/dashboard";
 
 // Initialize Pocketbase client
-const pb = new PocketBase("http://127.0.0.1:8090");
+const pb = new PocketBase(import.meta.env.VITE_POCKETBASE_URL || "http://127.0.0.1:8090");
 
 function App() {
   return (
