@@ -15,7 +15,9 @@ import routerBindings, {
 import { App as AntdApp } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import PocketBase from "pocketbase";
-import { dataProvider, liveProvider, authProvider } from "refine-pocketbase";
+import { dataProvider } from "./utils/dataProvider";
+import { liveProvider } from "./utils/liveProvider";
+import { authProvider } from "./utils/authProvider";
 
 import "@refinedev/antd/dist/reset.css";
 
