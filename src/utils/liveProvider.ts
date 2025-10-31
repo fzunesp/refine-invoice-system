@@ -4,7 +4,9 @@ import PocketBase from "pocketbase";
 
 export const liveProvider = (client: PocketBase): LiveProvider => ({
     subscribe: ({ channel, types, params, callback }) => {
+        console.log("Subscribing to channel:", channel);
         const resource = channel.replace("resources/", "");
+        console.log("Subscribing to resource:", resource);
 
         const listener = (e: any) => {
             if (types.includes("*") || types.includes(e.action)) {
