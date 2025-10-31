@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Refine, Authenticated } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import {
@@ -30,6 +31,21 @@ import { Dashboard } from "./pages/dashboard";
 const pb = new PocketBase(import.meta.env.VITE_POCKETBASE_URL || "http://127.0.0.1:8090");
 
 function App() {
+  useEffect(() => {
+    console.log("Attempting direct PocketBase subscription...");
+    try {
+      pb.collection("customers").subscribe("*", (e) => {
+        console.log("Direct subscription event:", e);
+      }).then(() => {
+        console.log("Direct subscription established!");
+      }).catch((err) => {
+        console.error("Direct subscription failed:", err);
+      });
+    } catch (err) {
+      console.error("Error initiating direct subscription:", err);
+    }
+  }, []);
+
   return (
     <BrowserRouter>
       <RefineKbarProvider>
