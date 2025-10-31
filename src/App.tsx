@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Refine, Authenticated } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import {
@@ -31,29 +30,6 @@ import { Dashboard } from "./pages/dashboard";
 const pb = new PocketBase(import.meta.env.VITE_POCKETBASE_URL || "http://127.0.0.1:8090");
 
 function App() {
-  useEffect(() => {
-    console.log("Attempting NATIVE EventSource connection...");
-    try {
-      const eventsource = new EventSource("https://pocketbase.flowmatica.ca/api/realtime");
-
-      eventsource.onopen = () => {
-        console.log("Native EventSource connection established!");
-      };
-
-      eventsource.onerror = (err) => {
-        console.error("Native EventSource error:", err);
-        eventsource.close();
-      };
-
-      eventsource.onmessage = (e) => {
-        console.log("Native EventSource message:", e.data);
-      };
-
-    } catch (err) {
-      console.error("Error initiating native EventSource:", err);
-    }
-  }, []);
-
   return (
     <BrowserRouter>
       <RefineKbarProvider>
