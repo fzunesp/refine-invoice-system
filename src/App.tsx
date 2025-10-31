@@ -32,17 +32,25 @@ const pb = new PocketBase(import.meta.env.VITE_POCKETBASE_URL || "http://127.0.0
 
 function App() {
   useEffect(() => {
-    console.log("Attempting direct PocketBase subscription...");
+    console.log("Attempting NATIVE EventSource connection...");
     try {
-      pb.collection("customers").subscribe("*", (e) => {
-        console.log("Direct subscription event:", e);
-      }).then(() => {
-        console.log("Direct subscription established!");
-      }).catch((err) => {
-        console.error("Direct subscription failed:", err);
-      });
+      const eventsource = new EventSource("https://pocketbase.flowmatica.ca/api/realtime");
+
+      eventsource.onopen = () => {
+        console.log("Native EventSource connection established!");
+      };
+
+      eventsource.onerror = (err) => {
+        console.error("Native EventSource error:", err);
+        eventsource.close();
+      };
+
+      eventsource.onmessage = (e) => {
+        console.log("Native EventSource message:", e.data);
+      };
+
     } catch (err) {
-      console.error("Error initiating direct subscription:", err);
+      console.error("Error initiating native EventSource:", err);
     }
   }, []);
 
