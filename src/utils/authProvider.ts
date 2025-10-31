@@ -1,5 +1,5 @@
 
-import { AuthProvider } from "@refinedev/core";
+import type { AuthProvider } from "@refinedev/core";
 import PocketBase from "pocketbase";
 
 export const authProvider = (client: PocketBase): AuthProvider => ({

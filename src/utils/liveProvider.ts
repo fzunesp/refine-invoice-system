@@ -1,5 +1,5 @@
 
-import { LiveProvider } from "@refinedev/core";
+import type { LiveProvider } from "@refinedev/core";
 import PocketBase from "pocketbase";
 
 export const liveProvider = (client: PocketBase): LiveProvider => ({
@@ -22,7 +22,7 @@ export const liveProvider = (client: PocketBase): LiveProvider => ({
 
         return {
             unsubscribe: () => {
-                client.collection(resource).unsubscribe("*", listener);
+                client.collection(resource).unsubscribe();
             },
         };
     },
