@@ -1,5 +1,5 @@
 
-import type { DataProvider, GetListParams, GetListResponse, GetOneParams, GetOneResponse, CreateParams, CreateResponse, UpdateParams, UpdateResponse, BaseRecord } from "@refinedev/core";
+import type { DataProvider, GetListParams, GetListResponse, GetOneParams, GetOneResponse, CreateParams, CreateResponse, UpdateParams, UpdateResponse, BaseRecord, GetManyParams, GetManyResponse, BaseKey } from "@refinedev/core";
 import PocketBase from "pocketbase";
 
 export const dataProvider = (client: PocketBase): DataProvider => ({
@@ -53,7 +53,7 @@ export const dataProvider = (client: PocketBase): DataProvider => ({
         return client.baseUrl;
     },
     getMany: async <TData extends BaseRecord = BaseRecord>({ resource, ids }: GetManyParams): Promise<GetManyResponse<TData>> => {
-        const filter = ids.map((id) => `id='${id}'`).join(" || ");
+        const filter = ids.map((id: BaseKey) => `id='${id}'`).join(" || ");
         const items = await client.collection(resource).getFullList({
             filter: filter,
         });
