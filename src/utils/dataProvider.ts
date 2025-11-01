@@ -52,6 +52,15 @@ export const dataProvider = (client: PocketBase): DataProvider => ({
     getApiUrl: () => {
         return client.baseUrl;
     },
+    getMany: async <TData extends BaseRecord = BaseRecord>({ resource, ids }: GetManyParams): Promise<GetManyResponse<TData>> => {
+        const filter = ids.map((id) => `id='${id}'`).join(" || ");
+        const items = await client.collection(resource).getFullList({
+            filter: filter,
+        });
+        return {
+            data: items as unknown as TData[],
+        };
+    },
     custom: async ({ url, method, headers, payload }) => {
         const response = await client.send(url, {
             method,

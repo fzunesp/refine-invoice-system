@@ -16,7 +16,6 @@ import dayjs from "dayjs";
 export const Dashboard = () => {
   const navigate = useNavigate();
   const [dateFilter, setDateFilter] = useState<"all" | "thisMonth" | "lastMonth" | "thisYear">("all");
-  const [refreshKey, setRefreshKey] = useState(0);
 
   // Get current user info
   const { data: user } = useGetIdentity<{ email: string; role: string }>();
@@ -26,9 +25,6 @@ export const Dashboard = () => {
     resource: "customers",
     pagination: { pageSize: 1000 },
     liveMode: "auto",
-    queryOptions: {
-      queryKey: ["customers", refreshKey],
-    },
   });
 
   // Fetch all invoices
@@ -36,9 +32,6 @@ export const Dashboard = () => {
     resource: "invoices",
     pagination: { pageSize: 1000 },
     liveMode: "auto",
-    queryOptions: {
-      queryKey: ["invoices", refreshKey],
-    },
   });
 
   // Filter invoices by date
@@ -132,11 +125,6 @@ export const Dashboard = () => {
 
   const revenueChartData = getRevenueByMonth();
 
-  // Handle refresh
-  const handleRefresh = () => {
-    setRefreshKey(prev => prev + 1);
-  };
-
   // Handle stat card clicks
   const handleCustomersClick = () => {
     navigate("/customers");
@@ -175,14 +163,6 @@ export const Dashboard = () => {
           </h1>
         </Col>
         <Col>
-          <Button
-            type="default"
-            icon={<ReloadOutlined />}
-            onClick={handleRefresh}
-            style={{ marginRight: "8px" }}
-          >
-            Refresh
-          </Button>
           <Button
             type="primary"
             icon={<DownloadOutlined />}
