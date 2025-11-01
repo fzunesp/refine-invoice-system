@@ -25,6 +25,7 @@ export const Dashboard = () => {
   const { data: customersData, isLoading: customersLoading } = useList({
     resource: "customers",
     pagination: { pageSize: 1000 },
+    liveMode: "auto",
     queryOptions: {
       queryKey: ["customers", refreshKey],
     },
@@ -34,6 +35,7 @@ export const Dashboard = () => {
   const { data: invoicesData, isLoading: invoicesLoading } = useList({
     resource: "invoices",
     pagination: { pageSize: 1000 },
+    liveMode: "auto",
     queryOptions: {
       queryKey: ["invoices", refreshKey],
     },
